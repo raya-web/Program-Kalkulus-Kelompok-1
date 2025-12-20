@@ -82,34 +82,22 @@
         .hamburger.active span:nth-child(2) { opacity: 0; }
         .hamburger.active span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
 
-        /* RESPONSIVITY FIXES */
+        /* RESPONSIVITY */
         @media (max-width: 768px) {
             body { padding-top: 70px; }
             .navbar { height: 70px; }
             .hamburger { display: flex; }
-            
             .desktop-menu {
-                position: fixed;
-                top: 0;
-                right: -100%;
-                width: 80%;
-                height: 100vh;
-                background: var(--navbar-bg);
-                flex-direction: column;
-                justify-content: center;
-                gap: 2rem;
-                transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-                backdrop-filter: blur(20px);
-                border-left: 1px solid var(--glass-border);
-                box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-                z-index: 1000;
+                position: fixed; top: 0; right: -100%; width: 80%; height: 100vh;
+                background: var(--navbar-bg); flex-direction: column; justify-content: center;
+                gap: 2rem; transition: 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+                backdrop-filter: blur(20px); border-left: 1px solid var(--glass-border);
+                box-shadow: -10px 0 30px rgba(0,0,0,0.5); z-index: 1000;
             }
             .desktop-menu.active { right: 0; }
-            .desktop-link { font-size: 1.2rem; }
-
             .grid-container { grid-template-columns: 1fr !important; }
             .detail-layout { grid-template-columns: 1fr !important; }
-            .visual-box { height: 300px !important; }
+            .visual-box { height: 280px !important; }
         }
 
         .page-section { display: none; padding: 2rem 1.5rem; max-width: 1200px; margin: 0 auto; animation: slideUp 0.6s cubic-bezier(0.23, 1, 0.32, 1); }
@@ -121,6 +109,7 @@
         
         .btn-gradient { width: 100%; padding: 14px; background: var(--primary-gradient); color: white; border: none; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; margin-top: 1rem; }
         .btn-gradient:hover { transform: translateY(-3px); box-shadow: 0 10px 20px var(--primary-glow); }
+        .btn-gradient:disabled { opacity: 0.6; cursor: not-allowed; }
 
         input, select, textarea { width: 100%; padding: 14px; background: var(--input-bg); border: 1px solid var(--glass-border); border-radius: 12px; color: var(--text-main); margin-bottom: 10px; font-family: inherit; font-size: 1rem; }
 
@@ -128,18 +117,17 @@
         
         /* CHAT MESSAGES */
         .chat-messages { height: 400px; overflow-y: auto; display: flex; flex-direction: column; gap: 12px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 12px; margin-bottom: 15px; }
-        .message-bubble { max-width: 85%; padding: 10px 15px; border-radius: 18px; font-size: 0.95rem; }
+        .message-bubble { max-width: 85%; padding: 10px 15px; border-radius: 18px; font-size: 0.95rem; word-wrap: break-word; }
         .msg-self { align-self: flex-end; background: var(--primary-gradient); color: white; border-bottom-right-radius: 4px; }
         .msg-other { align-self: flex-start; background: var(--chat-other); color: var(--text-main); border-bottom-left-radius: 4px; }
 
-        /* FEEDBACK / RATING */
+        /* STAR RATING */
         .star-rating { display: flex; flex-direction: row-reverse; justify-content: center; gap: 12px; margin-bottom: 15px; }
         .star-rating input { display: none; }
         .star-rating label { font-size: 2.2rem; color: var(--text-muted); cursor: pointer; transition: 0.2s; }
         .star-rating input:checked ~ label, .star-rating label:hover, .star-rating label:hover ~ label { color: #fbbf24; }
 
         .checkmark-container { width: 100px; height: 100px; margin: 0 auto 20px; }
-        .checkmark-svg { width: 100px; height: 100px; }
         .checkmark-circle { stroke-dasharray: 166; stroke-dashoffset: 166; stroke: var(--success-color); stroke-width: 4; fill: none; animation: stroke 0.6s forwards; }
         .checkmark-check { stroke-dasharray: 48; stroke-dashoffset: 48; stroke: var(--success-color); stroke-width: 4; fill: none; animation: stroke 0.3s 0.8s forwards; }
         @keyframes stroke { 100% { stroke-dashoffset: 0; } }
@@ -148,7 +136,6 @@
         .team-card { text-align: center; padding: 2rem 1rem; }
         .team-card img { width: 110px; height: 110px; border-radius: 50%; border: 4px solid #a855f7; object-fit: cover; margin-bottom: 15px; }
         .role-badge { background: rgba(168, 85, 247, 0.2); color: #a855f7; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-bottom: 10px; }
-        .quote { font-style: italic; font-size: 0.85rem; color: var(--text-muted); margin-top: 10px; line-height: 1.4; }
     </style>
 </head>
 <body data-theme="dark">
@@ -169,7 +156,7 @@
                 <a class="desktop-link" onclick="switchPage('chat')" id="nav-chat">Diskusi</a>
                 <a class="desktop-link" onclick="switchPage('feedback')" id="nav-feedback">Feedback</a>
                 <a class="desktop-link" onclick="switchPage('about')" id="nav-about">Tim</a>
-                <button id="theme-toggle" onclick="toggleTheme()" style="background:none; border:none; color:var(--text-main); cursor:pointer; font-size: 1.1rem;"><i class="fa-solid fa-circle-half-stroke"></i></button>
+                <button id="theme-toggle" onclick="toggleTheme()" style="background:none; border:none; color:var(--text-main); cursor:pointer; font-size: 1.1rem; padding: 10px;"><i class="fa-solid fa-circle-half-stroke"></i></button>
             </div>
         </div>
     </nav>
@@ -177,14 +164,14 @@
     <!-- DASHBOARD MATERI -->
     <section id="home" class="page-section active-page">
         <div style="text-align:center; margin-bottom:3rem;">
-            <h1 class="logo" style="font-size: clamp(2rem, 8vw, 2.8rem);"><span>Program Kalkulus</span> Kelompok 1</h1>
-            <p style="color:var(--text-muted); max-width: 800px; margin: 0 auto;">Program ini dibuat sebagai bagian dari rangkaian tugas besar mata kuliah Kalkulus, Program Studi Pendidikan Ilmu Komputer, Universitas Pendidikan Indonesia.</p>
+            <h1 class="logo" style="font-size: clamp(2rem, 8vw, 2.8rem);"><span>Eksplorasi</span> Kalkulus</h1>
+            <p style="color:var(--text-muted); max-width: 800px; margin: 0 auto;">Program ini dibuat untuk menunjang pembelajaran mata kuliah Kalkulus di Universitas Pendidikan Indonesia.</p>
         </div>
         <div class="grid-container">
-            <div class="glass-card"><h3>Sistem Bilangan Real</h3><p>Fondasi utama kalkulus mengenai himpunan $\mathbb{R}$, interval, dan nilai mutlak.</p><button class="btn-gradient" onclick="openDetail('bilangan')">Pelajari</button></div>
-            <div class="glass-card"><h3>Fungsi & Grafik</h3><p>Aturan pemetaan, domain, range, serta transformasi fungsi visual.</p><button class="btn-gradient" onclick="openDetail('fungsi')">Pelajari</button></div>
+            <div class="glass-card"><h3>Sistem Bilangan Real</h3><p>Fondasi utama mengenai himpunan $\mathbb{R}$, interval, dan nilai mutlak.</p><button class="btn-gradient" onclick="openDetail('bilangan')">Pelajari</button></div>
+            <div class="glass-card"><h3>Fungsi & Grafik</h3><p>Pemetaan domain ke range serta representasi visual fungsi matematika.</p><button class="btn-gradient" onclick="openDetail('fungsi')">Pelajari</button></div>
             <div class="glass-card"><h3>Limit & Kekontinuan</h3><p>Perilaku fungsi saat mendekati titik tertentu dan konsep grafik tanpa putus.</p><button class="btn-gradient" onclick="openDetail('limit')">Pelajari</button></div>
-            <div class="glass-card"><h3>Turunan (Diferensial)</h3><p>Konsep laju perubahan sesaat, kemiringan garis singgung, dan aturan rantai.</p><button class="btn-gradient" onclick="openDetail('turunan')">Pelajari</button></div>
+            <div class="glass-card"><h3>Turunan (Diferensial)</h3><p>Laju perubahan sesaat, kemiringan garis singgung, dan aturan rantai.</p><button class="btn-gradient" onclick="openDetail('turunan')">Pelajari</button></div>
             <div class="glass-card"><h3>Integral Tentu</h3><p>Perhitungan akumulasi luas daerah di bawah kurva fungsi $f(x)$.</p><button class="btn-gradient" onclick="openDetail('integral')">Pelajari</button></div>
             <div class="glass-card"><h3>Volume Benda Putar</h3><p>Pemanfaatan integral untuk menghitung volume objek 3D hasil rotasi.</p><button class="btn-gradient" onclick="openDetail('volume')">Pelajari</button></div>
         </div>
@@ -251,8 +238,8 @@
                 <input type="email" id="auth-email" placeholder="Email">
                 <input type="password" id="auth-password" placeholder="Password">
                 <button class="btn-gradient" id="btn-auth-action" onclick="handleAuth()">Masuk</button>
-                <div style="text-align: center; margin-top: 10px;">
-                    <span onclick="resetPassword()" style="cursor:pointer; color:#a855f7; display:block; margin-bottom:10px;">Lupa Password?</span>
+                <div style="text-align: center; margin-top: 15px;">
+                    <span onclick="resetPassword()" style="cursor:pointer; color:#a855f7; display:block; margin-bottom: 10px;">Lupa Password?</span>
                     <span id="auth-switch-text" style="font-size: 0.9rem;">Belum punya akun?</span> 
                     <span onclick="toggleAuthMode()" style="cursor:pointer; color:#a855f7; font-weight:700;">Daftar di sini</span>
                 </div>
@@ -292,10 +279,11 @@
                     <input type="radio" id="star2" name="rating" value="2"><label for="star2" class="fa-solid fa-star"></label>
                     <input type="radio" id="star1" name="rating" value="1"><label for="star1" class="fa-solid fa-star"></label>
                 </div>
-                <input type="text" id="fb-name" placeholder="Nama">
-                <textarea id="fb-msg" rows="4" placeholder="Saran Anda"></textarea>
-                <button class="btn-gradient" onclick="submitFeedback()">Kirim Feedback</button>
+                <input type="text" id="fb-name" name="name" placeholder="Nama">
+                <textarea id="fb-msg" name="message" rows="4" placeholder="Saran Anda"></textarea>
+                <button class="btn-gradient" id="btn-submit-fb" onclick="submitFeedback()">Kirim Feedback</button>
             </div>
+            
             <div id="fb-thanks" style="display:none; padding: 20px;">
                 <div class="checkmark-container">
                     <svg class="checkmark-svg" viewBox="0 0 52 52">
@@ -303,7 +291,8 @@
                         <path class="checkmark-check" d="M14.1 27.2l7.1 7.2 16.7-16.8" />
                     </svg>
                 </div>
-                <h3>Terima Kasih!</h3>
+                <h3>Berhasil Terkirim!</h3>
+                <p style="color:var(--text-muted); margin-bottom: 20px;">Terima kasih atas saran Anda.</p>
                 <button class="btn-gradient" onclick="resetFeedbackForm()">Kirim Lagi</button>
             </div>
         </div>
@@ -312,22 +301,10 @@
     <!-- TIM -->
     <section id="about" class="page-section">
         <div class="grid-container">
-            <div class="glass-card team-card">
-                <img src="raya.jpg"><h3>Aditya Raya</h3><span class="role-badge">Fullstack Developer</span><p>NIM: 2507320</p>
-                <p class="quote">"Matematika adalah bahasa alam semesta yang paling murni."</p>
-            </div>
-            <div class="glass-card team-card">
-                <img src="azka.jpg"><h3>Azka Ramadhan</h3><span class="role-badge">Backend Developer</span><p>NIM: 2502136</p>
-                <p class="quote">"Logika membawa Anda dari A ke B, imajinasi membawa Anda ke mana saja."</p>
-            </div>
-            <div class="glass-card team-card">
-                <img src="salsa.jpg"><h3>Salsa Nur</h3><span class="role-badge">UI Designer</span><p>NIM: 2501960</p>
-                <p class="quote">"Desain bukan hanya apa yang terlihat, tapi bagaimana cara kerjanya."</p>
-            </div>
-            <div class="glass-card team-card">
-                <img src="novi.jpg"><h3>Novi Nur</h3><span class="role-badge">Content Analyst</span><p>NIM: 2507647</p>
-                <p class="quote">"Materi yang baik adalah kunci dari pemahaman yang mendalam."</p>
-            </div>
+            <div class="glass-card team-card"><img src="raya.jpg"><h3>Aditya Raya</h3><span class="role-badge">Project Manager</span><p>NIM: 2507320</p></div>
+            <div class="glass-card team-card"><img src="azka.jpg"><h3>Azka Ramadhan</h3><span class="role-badge">Lead Programmer</span><p>NIM: 12334</p></div>
+            <div class="glass-card team-card"><img src="salsa.jpg"><h3>Salsa Nur</h3><span class="role-badge">UI Designer</span><p>NIM: 2501960</p></div>
+            <div class="glass-card team-card"><img src="novi.jpg"><h3>Novi Nur</h3><span class="role-badge">Content Analyst</span><p>NIM: 2507647</p></div>
         </div>
     </section>
 
@@ -340,48 +317,58 @@
             burger.classList.toggle('active');
         }
 
-        // --- MATERI DATA (ENRICHED) ---
+        function switchPage(id) {
+            document.getElementById('nav-links').classList.remove('active');
+            document.getElementById('hamburger-menu').classList.remove('active');
+            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
+            document.getElementById(id).classList.add('active-page');
+            document.querySelectorAll('.desktop-link').forEach(l => l.classList.remove('active'));
+            if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).classList.add('active');
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+
+        // --- MATERI DATA ---
         const materialData = {
             'bilangan': {
                 title: 'Sistem Bilangan Real',
-                desc: 'Sistem bilangan real $\\mathbb{R}$ adalah dasar utama kalkulus. Ia mencakup bilangan rasional (seperti 1/2, 0.75) dan irasional (seperti $\\pi, \\sqrt{2}$). Bilangan real memiliki sifat kelengkapan yang menjamin tidak ada "lubang" pada garis bilangan, memungkinkan kita melakukan operasi limit secara presisi.',
-                points: ['Himpunan Bilangan: Alami, Bulat, Rasional, dan Irasional', 'Sifat Urutan: Trikotomi, Transitif, dan Penambahan', 'Interval: Selang terbuka $(a,b)$ dan tertutup $[a,b]$', 'Nilai Mutlak: Jarak titik ke nol $|x|$', 'Ketaksamaan Segitiga: $|a+b| \\leq |a| + |b|$', 'Pertidaksamaan Kuadrat & Himpunan Penyelesaian'],
+                desc: 'Sistem bilangan real $\\mathbb{R}$ adalah dasar utama kalkulus. Ia mencakup bilangan rasional (seperti 1/2) dan irasional (seperti $\\pi$). Bilangan real memiliki sifat kelengkapan yang menjamin tidak ada "lubang" pada garis bilangan.',
+                points: ['Himpunan Bilangan Bulat, Rasional, Irasional','Sifat Urutan: Trikotomi & Transitif','Interval Terbuka $(a,b)$ & Tertutup $[a,b]$','Nilai Mutlak $|x|$ sebagai Jarak','Ketaksamaan Segitiga $|a+b| \\leq |a|+|b|$','Pertidaksamaan Kuadrat & Garis Bilangan'],
                 formula: '$$|x-a| < \\epsilon \\iff a-\\epsilon < x < a+\\epsilon$$',
                 graphFn: 'abs(x)'
             },
             'fungsi': {
                 title: 'Fungsi & Grafik',
-                desc: 'Fungsi adalah aturan pemetaan yang menghubungkan setiap elemen $x$ di domain tepat ke satu elemen $y$ di range. Grafik fungsi memberikan representasi visual tentang hubungan antar variabel, mempermudah kita memahami tren data.',
-                points: ['Uji Garis Vertikal untuk Menentukan Fungsi', 'Domain & Range: Batasan input dan output', 'Fungsi Genap & Ganjil: Simetri grafik', 'Operasi & Komposisi Fungsi $(f \\circ g)(x)$', 'Transformasi: Pergeseran horizontal dan vertikal', 'Fungsi Transenden: Eksponen, Logaritma, dan Trigonometri'],
+                desc: 'Fungsi adalah aturan yang menghubungkan setiap elemen domain ke tepat satu elemen range. Grafik fungsi memberikan representasi visual hubungan antar variabel.',
+                points: ['Uji Garis Vertikal','Domain & Range','Fungsi Genap (Simetri Sumbu Y)','Fungsi Ganjil (Simetri Titik Asal)','Transformasi: Pergeseran & Peregangan','Fungsi Komposisi $(f \\circ g)(x)$'],
                 formula: '$$y = f(x) = a(x-h)^2 + k$$',
                 graphFn: 'x^2'
             },
             'limit': {
                 title: 'Limit & Kekontinuan',
-                desc: 'Limit menjelaskan perilaku fungsi saat input mendekati suatu nilai tertentu. Konsep ini menjawab pertanyaan tentang apa yang terjadi pada fungsi di sekitar titik yang mungkin tidak terdefinisi (seperti 0/0).',
-                points: ['Definisi Intuitif Limit Sisi Kiri & Kanan', 'Teorema Utama Limit untuk Operasi Aljabar', 'Aturan L\'Hopital untuk Bentuk Tak Tentu', 'Teorema Apit (Squeeze Theorem)', 'Kekontinuan di Titik dan Interval', 'Limit Tak Hingga dan Asimtot'],
+                desc: 'Limit menjelaskan perilaku fungsi saat mendekati titik tertentu. Kekontinuan memastikan grafik tidak terputus pada suatu selang.',
+                points: ['Limit Sisi Kiri & Kanan','Teorema Limit Utama','Aturan L\'Hopital (Bentuk $0/0$)','Teorema Apit (Squeeze Theorem)','Kekontinuan di Satu Titik','Limit Tak Hingga & Asimtot'],
                 formula: '$$\\lim_{x \\to c} f(x) = L$$',
                 graphFn: 'sin(x)/x'
             },
             'turunan': {
                 title: 'Turunan (Diferensial)',
-                desc: 'Turunan mengukur laju perubahan sesaat suatu variabel terhadap variabel lainnya. Secara geometris, turunan pertama mewakili kemiringan (gradien) garis singgung kurva di suatu titik.',
-                points: ['Definisi Limit Turunan (Rasio Perubahan)', 'Aturan Dasar: Pangkat, Hasil Kali, dan Hasil Bagi', 'Aturan Rantai (Chain Rule) untuk Fungsi Komposisi', 'Turunan Implisit dan Turunan Tingkat Tinggi', 'Aplikasi: Titik Stasioner, Maksimum & Minimum', 'Uji Turunan Kedua untuk Kecekungan'],
+                desc: 'Turunan mengukur laju perubahan sesaat dan gradien garis singgung kurva.',
+                points: ['Definisi Limit Turunan','Aturan Rantai (Chain Rule)','Turunan Implisit','Aplikasi Maksimum & Minimum','Uji Turunan Kedua untuk Kecekungan','Laju yang Berkaitan (Related Rates)'],
                 formula: '$$f\'(x) = \\lim_{h \\to 0} \\frac{f(x+h)-f(x)}{h}$$',
                 graphFn: '3*x^2'
             },
             'integral': {
                 title: 'Integral Tentu',
-                desc: 'Integral adalah proses kebalikan dari turunan dan mewakili akumulasi total luas daerah di bawah kurva fungsi $f(x)$ dari batas $a$ hingga $b$.',
-                points: ['Teorema Dasar Kalkulus I & II', 'Teknik Substitusi untuk Menyederhanakan Integral', 'Integral Parsial: $\\int u \\, dv = uv - \\int v \\, du$', 'Luas Daerah di Bawah Kurva dan di Antara Dua Kurva', 'Linearitas Integral dan Sifat Penjumlahan', 'Integrasi Fungsi Trigonometri'],
-                formula: '$$\\int_{a}^{b} f(x) \\, dx = F(b) - F(a)$$',
+                desc: 'Integral mewakili akumulasi total, sering digunakan untuk menghitung luas di bawah kurva.',
+                points: ['Teorema Dasar Kalkulus I & II','Teknik Substitusi $u$','Integral Parsial','Luas Antara Dua Kurva','Linearitas Integral','Integrasi Fungsi Trigonometri'],
+                formula: '$$\\int_{a}^{b} f(x) dx = F(b) - F(a)$$',
                 graphFn: 'x^2 + 1'
             },
             'volume': {
                 title: 'Volume Benda Putar',
-                desc: 'Volume objek 3D yang dihasilkan dengan memutar daerah 2D mengelilingi sumbu rotasi (X atau Y). Teknik ini menggunakan integral untuk menghitung volume benda simetris.',
-                points: ['Metode Cakram: Daerah menempel pada sumbu putar', 'Metode Cincin: Daerah memiliki lubang di tengah', 'Metode Kulit Tabung sebagai Alternatif Integrasi', 'Rotasi Mengelilingi Sumbu X dan Sumbu Y', 'Irisan Penampang yang Diketahui Bentuknya', 'Aplikasi Fisika dalam Perhitungan Volume Tangki'],
-                formula: '$$V = \\pi \\int_{a}^{b} [f(x)]^2 \\, dx$$',
+                desc: 'Volume objek 3D hasil rotasi kurva 2D mengelilingi sumbu koordinat.',
+                points: ['Metode Cakram (Disk Method)','Metode Cincin (Washer Method)','Metode Kulit Tabung (Shell Method)','Rotasi Sumbu X vs Sumbu Y','Irisan Penampang Geometris','Aplikasi pada Objek Simetris'],
+                formula: '$$V = \\pi \\int_{a}^{b} [f(x)]^2 dx$$',
                 graphFn: 'sqrt(x)'
             }
         };
@@ -403,62 +390,52 @@
         let isLoginMode = true;
 
         auth.onAuthStateChanged(user => {
-            const authArea = document.getElementById('auth-area');
-            const verifyArea = document.getElementById('verify-area');
-            const chatArea = document.getElementById('chat-area');
             if (user) {
-                authArea.style.display = 'none';
+                document.getElementById('auth-area').style.display = 'none';
                 if (user.emailVerified) {
-                    verifyArea.style.display = 'none';
-                    chatArea.style.display = 'block';
+                    document.getElementById('chat-area').style.display = 'block';
+                    document.getElementById('verify-area').style.display = 'none';
                     document.getElementById('user-name-tag').innerText = user.displayName || user.email;
                     loadMsgs();
                 } else {
-                    verifyArea.style.display = 'block';
-                    chatArea.style.display = 'none';
+                    document.getElementById('verify-area').style.display = 'block';
                 }
             } else {
-                authArea.style.display = 'block';
-                verifyArea.style.display = 'none';
-                chatArea.style.display = 'none';
+                document.getElementById('auth-area').style.display = 'block';
+                document.getElementById('chat-area').style.display = 'none';
+                document.getElementById('verify-area').style.display = 'none';
             }
         });
 
-        function switchPage(id) {
-            document.getElementById('nav-links').classList.remove('active');
-            document.getElementById('hamburger-menu').classList.remove('active');
-            document.querySelectorAll('.page-section').forEach(p => p.classList.remove('active-page'));
-            document.getElementById(id).classList.add('active-page');
-            document.querySelectorAll('.desktop-link').forEach(l => l.classList.remove('active'));
-            if(document.getElementById('nav-'+id)) document.getElementById('nav-'+id).classList.add('active');
-            window.scrollTo({top: 0, behavior: 'smooth'});
+        async function handleAuth() {
+            const email = document.getElementById('auth-email').value;
+            const pass = document.getElementById('auth-password').value;
+            try {
+                if(isLoginMode) await auth.signInWithEmailAndPassword(email, pass);
+                else {
+                    const res = await auth.createUserWithEmailAndPassword(email, pass);
+                    await res.user.updateProfile({ displayName: document.getElementById('auth-name').value });
+                    await res.user.sendEmailVerification();
+                    alert("Verifikasi dikirim.");
+                }
+            } catch(e) { alert(e.message); }
         }
 
         function openDetail(key) {
-            const data = materialData[key];
-            document.getElementById('detail-title').innerHTML = `<span>${data.title}</span>`;
-            document.getElementById('detail-desc').innerHTML = data.desc;
-            const list = document.getElementById('detail-points');
-            list.innerHTML = '';
-            data.points.forEach(p => list.innerHTML += `<li>${p}</li>`);
-            document.getElementById('detail-formula').innerHTML = data.formula;
-            renderSmoothGraph('#detail-graph', data.graphFn);
+            const d = materialData[key];
+            document.getElementById('detail-title').innerHTML = `<span>${d.title}</span>`;
+            document.getElementById('detail-desc').innerHTML = d.desc;
+            const l = document.getElementById('detail-points'); l.innerHTML = '';
+            d.points.forEach(p => l.innerHTML += `<li>${p}</li>`);
+            document.getElementById('detail-formula').innerHTML = d.formula;
+            renderSmoothGraph('#detail-graph', d.graphFn);
             MathJax.typesetPromise();
             switchPage('detail-materi');
         }
 
         function renderSmoothGraph(target, fn) {
-            const container = document.querySelector(target);
-            container.innerHTML = '';
-            try {
-                functionPlot({
-                    target: target,
-                    width: container.clientWidth,
-                    height: container.clientHeight,
-                    grid: true,
-                    data: [{ fn: fn, color: '#a855f7' }]
-                });
-            } catch(e) {}
+            const c = document.querySelector(target); c.innerHTML = '';
+            try { functionPlot({ target, width: c.clientWidth, height: c.clientHeight, grid: true, data: [{ fn, color: '#a855f7' }] }); } catch(e) {}
         }
 
         function toggleInputs() {
@@ -479,79 +456,77 @@
                 else if(op === 'limit') res = nerdamer(`limit(${expr}, x, ${a})`).toTeX();
                 else if(op === 'defint') res = nerdamer(`defint(${expr}, ${a}, ${b})`).toTeX();
                 else if(op === 'volume') {
-                    const integral = nerdamer(`defint((${expr})^2, ${a}, ${b})`);
-                    res = `V = ${(eval(integral.toString()) * Math.PI).toFixed(4)} \\pi`;
+                    const val = eval(nerdamer(`defint((${expr})^2, ${a}, ${b})`).toString());
+                    res = `V = ${(val * Math.PI).toFixed(4)} \\pi`;
                 }
                 document.getElementById('calc-result').style.display = 'block';
                 document.getElementById('res-math').innerHTML = `$$ ${res} $$`;
                 renderSmoothGraph('#res-graph', expr);
                 MathJax.typesetPromise();
-            } catch (e) { alert("Error hitung."); }
+            } catch(e) { alert("Error kalkulasi."); }
         }
 
-        function toggleAuthMode() {
-            isLoginMode = !isLoginMode;
-            document.getElementById('auth-title').innerText = isLoginMode ? "Masuk Akun" : "Daftar Akun";
-            document.getElementById('reg-fields').style.display = isLoginMode ? "none" : "block";
-            document.getElementById('btn-auth-action').innerText = isLoginMode ? "Masuk" : "Daftar";
-            document.getElementById('auth-switch-text').innerText = isLoginMode ? "Belum punya akun?" : "Sudah punya akun?";
-        }
+        // --- FORMSPREE FEEDBACK ---
+        async function submitFeedback() {
+            const btn = document.getElementById('btn-submit-fb');
+            const name = document.getElementById('fb-name').value;
+            const msg = document.getElementById('fb-msg').value;
+            const rating = document.querySelector('input[name="rating"]:checked');
 
-        async function handleAuth() {
-            const email = document.getElementById('auth-email').value;
-            const pass = document.getElementById('auth-password').value;
+            if (!rating || !name || !msg) return alert("Lengkapi form!");
+
+            btn.innerText = "Mengirim..."; btn.disabled = true;
+
             try {
-                if(isLoginMode) await auth.signInWithEmailAndPassword(email, pass);
-                else {
-                    const res = await auth.createUserWithEmailAndPassword(email, pass);
-                    await res.user.updateProfile({ displayName: document.getElementById('auth-name').value });
-                    await res.user.sendEmailVerification();
-                    alert("Cek email Anda.");
-                }
-            } catch(e) { alert(e.message); }
-        }
+                const response = await fetch("https://formspree.io/f/xjknqppb", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                    body: JSON.stringify({ name, rating: rating.value, message: msg })
+                });
 
-        function logout() { auth.signOut(); }
-        function resetPassword() {
-            const email = document.getElementById('auth-email').value;
-            if(!email) return alert("Isi email.");
-            auth.sendPasswordResetEmail(email).then(() => alert("Link reset dikirim."));
-        }
-
-        function sendMsg() {
-            const input = document.getElementById('msg-input');
-            if(!input.value.trim()) return;
-            db.ref('messages').push({ user: auth.currentUser.displayName || auth.currentUser.email, text: input.value, uid: auth.currentUser.uid });
-            input.value = '';
-        }
-
-        function loadMsgs() {
-            const chatMsgs = document.getElementById('chat-msgs');
-            chatMsgs.innerHTML = '';
-            db.ref('messages').limitToLast(15).on('child_added', snap => {
-                const m = snap.val();
-                const div = document.createElement('div');
-                div.className = `message-bubble ${m.uid === auth.currentUser.uid ? 'msg-self' : 'msg-other'}`;
-                div.innerHTML = `<strong>${m.user}</strong><br>${m.text}`;
-                chatMsgs.appendChild(div);
-                chatMsgs.scrollTop = chatMsgs.scrollHeight;
-            });
-        }
-
-        function submitFeedback() {
-            document.getElementById('fb-form').style.display = 'none';
-            document.getElementById('fb-thanks').style.display = 'block';
+                if (response.ok) {
+                    document.getElementById('fb-form').style.display = 'none';
+                    document.getElementById('fb-thanks').style.display = 'block';
+                } else { alert("Gagal mengirim."); }
+            } catch (e) { alert("Terjadi kesalahan."); }
+            finally { btn.innerText = "Kirim Feedback"; btn.disabled = false; }
         }
 
         function resetFeedbackForm() {
             document.getElementById('fb-thanks').style.display = 'none';
             document.getElementById('fb-form').style.display = 'block';
+            document.getElementById('fb-name').value = '';
+            document.getElementById('fb-msg').value = '';
         }
 
+        // --- CHAT LOGIC ---
+        function sendMsg() {
+            const i = document.getElementById('msg-input'); if(!i.value.trim()) return;
+            db.ref('messages').push({ user: auth.currentUser.displayName || auth.currentUser.email, text: i.value, uid: auth.currentUser.uid });
+            i.value = '';
+        }
+        function loadMsgs() {
+            const c = document.getElementById('chat-msgs'); c.innerHTML = '';
+            db.ref('messages').limitToLast(15).on('child_added', snap => {
+                const m = snap.val();
+                const d = document.createElement('div');
+                d.className = `message-bubble ${m.uid === auth.currentUser.uid ? 'msg-self' : 'msg-other'}`;
+                d.innerHTML = `<strong>${m.user}</strong><br>${m.text}`;
+                c.appendChild(d); c.scrollTop = c.scrollHeight;
+            });
+        }
+
+        function logout() { auth.signOut(); }
         function toggleTheme() { document.body.setAttribute('data-theme', document.body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark'); }
+        function toggleAuthMode() { 
+            isLoginMode = !isLoginMode; 
+            document.getElementById('auth-title').innerText = isLoginMode ? "Masuk Akun" : "Daftar Akun";
+            document.getElementById('reg-fields').style.display = isLoginMode ? "none" : "block";
+            document.getElementById('btn-auth-action').innerText = isLoginMode ? "Masuk" : "Daftar";
+        }
         function processOCR(e) { Tesseract.recognize(e.target.files[0], 'eng').then(({ data: { text } }) => { document.getElementById('expr-input').value = text.toLowerCase().replace(/[^a-z0-9\+\-\*\/\^]/g, ''); }); }
         function checkVerification() { auth.currentUser.reload().then(() => { if(auth.currentUser.emailVerified) location.reload(); else alert("Belum diverifikasi."); }); }
+        function resetPassword() { const e = document.getElementById('auth-email').value; if(e) auth.sendPasswordResetEmail(e).then(() => alert("Email reset terkirim.")); else alert("Isi email."); }
     </script>
 </body>
 </html>
-
